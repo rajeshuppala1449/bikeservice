@@ -1,7 +1,11 @@
 import React, { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { setAlert } from "../../actions/alert";
+import PropTypes from "prop-types";
+import { registerAdmin } from "../../actions/auth";
 
-const RegisterAdmin = () => {
+const RegisterAdmin = ({ registerAdmin, setAlert, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -36,11 +40,28 @@ const RegisterAdmin = () => {
   const onSubmit = e => {
     e.preventDefault();
     if (password !== password2) {
-      console.log("password dont match");
+      setAlert("Password do not match", "danger", 5000);
     } else {
-      console.log(formData);
+      registerAdmin({
+        street,
+        area,
+        city,
+        state,
+        pincode,
+        cname,
+        name,
+        email,
+        phone,
+        password
+      });
     }
   };
+
+  //redirect if logged in
+  if (isAuthenticated) {
+    return <Redirect to="/dash" />;
+  }
+
   return (
     <Fragment>
       <h1 className="large text-primary">Sign Up</h1>
@@ -170,4 +191,17 @@ const RegisterAdmin = () => {
   );
 };
 
-export default RegisterAdmin;
+RegisterAdmin.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  registerAdmin: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
+};
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(
+  mapStateToProps,
+  { setAlert, registerAdmin }
+)(RegisterAdmin);

@@ -6,6 +6,9 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const User = require("../../models/User");
+const CBDB = require("../../models/CBDB");
+const Slot = require("../../models/Slot");
+const Day = require("../../models/Day");
 const Admin = require("../../models/Admin");
 
 //@route POST api/register/admin
@@ -90,6 +93,60 @@ router.post(
           id: admin.id
         }
       };
+
+      var tslot = [
+        "10:00 - 11:00",
+        "11:00 - 12:00",
+        "12:00 - 11:00",
+        "14:00 - 15:00",
+        "15:00 - 16:00",
+        "16:00 - 17:00"
+      ];
+      var slot;
+      var day;
+      var cbdb;
+      var dayid = new Array(3);
+
+      for (j = 1; j < 4; j++) {
+        var sid = new Array(6);
+
+        for (i = 1; i < 7; i++) {
+          slot = new Slot({
+            admin: admin.id,
+            time: tslot[i - 1],
+            slot: i,
+            day: `day${j}`
+          });
+
+          await slot.save();
+
+          sid[i - 1] = slot.id;
+        }
+
+        day = new Day({
+          slot1: sid[0],
+          slot2: sid[1],
+          slot3: sid[2],
+          slot4: sid[3],
+          slot5: sid[4],
+          slot6: sid[5]
+        });
+
+        await day.save();
+
+        dayid[j - 1] = day.id;
+      }
+
+      cbdb = new CBDB({
+        cid: admin.id,
+        day1: dayid[0],
+        day2: dayid[1],
+        day3: dayid[2]
+      });
+
+      await cbdb.save();
+
+      await Admin.updateOne({ _id: admin.id }, { cbdb: cbdb.id });
 
       jwt.sign(
         payload,

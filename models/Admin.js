@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const AdminSchema = new mongoose.Schema({
+  cbdb: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "cbdb"
+  },
   profile: {
     type: String,
     default: "admin"

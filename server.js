@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/register", require("./routes/api/register"));
 app.use("/api/login", require("./routes/api/login"));
-app.use("/api/profile", require("./routes/api/profile"));
+app.use("/api/book", require("./routes/api/book"));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

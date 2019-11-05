@@ -28,7 +28,7 @@ export default function(state = initialState, action) {
     case LOGOUT:
       return {
         ...state,
-        // cid: null,
+        cid: null,
         slots: null
       };
     default:

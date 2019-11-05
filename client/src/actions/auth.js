@@ -10,7 +10,7 @@ import {
 } from "./types";
 import { setAlert } from "./alert";
 import setAuthToken from "../utils/setAuthToken";
-import { selComp } from "./dash";
+import { selComp, remSlots } from "./dash";
 
 //Load User
 export const loadUser = () => async dispatch => {
@@ -158,5 +158,5 @@ export const login = ({ email, password }) => async dispatch => {
 //Logout
 export const logout = () => dispatch => {
   dispatch({ type: LOGOUT });
-  // dispatch(remSlots());
+  dispatch(remSlots());
 };

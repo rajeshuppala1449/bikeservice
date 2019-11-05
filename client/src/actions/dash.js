@@ -3,8 +3,8 @@ import {
   //SELECT_SLOT,
   SELECT_COMPANY,
   //BOOK_SLOT,
-  GET_SLOTS
-  //LOGOUT
+  GET_SLOTS,
+  LOGOUT
 } from "./types";
 import { setAlert } from "./alert";
 //import setAuthToken from "../utils/setAuthToken";
@@ -47,7 +47,7 @@ export const getSlots = ({ id }) => async dispatch => {
   }
 };
 
-// //remove slots
-// export const remSlots = () => dispatch => {
-//   dispatch({ type: LOGOUT });
-// };
+//remove slots
+export const remSlots = () => dispatch => {
+  dispatch({ type: LOGOUT });
+};

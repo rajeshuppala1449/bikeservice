@@ -37,12 +37,12 @@ const RegisterAdmin = ({ registerAdmin, setAlert, isAuthenticated }) => {
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = e => {
+  const onSubmit = async e => {
     e.preventDefault();
     if (password !== password2) {
       setAlert("Password do not match", "danger", 5000);
     } else {
-      registerAdmin({
+      await registerAdmin({
         street,
         area,
         city,
@@ -59,7 +59,7 @@ const RegisterAdmin = ({ registerAdmin, setAlert, isAuthenticated }) => {
 
   //redirect if logged in
   if (isAuthenticated) {
-    return <Redirect to="/dash" />;
+    return <Redirect to="/dashboard" />;
   }
 
   return (

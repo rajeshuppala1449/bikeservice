@@ -6,6 +6,8 @@ import RegisterAdmin from "./components/auth/RegisterAdmin";
 import RegisterUser from "./components/auth/RegisterUser";
 import Login from "./components/auth/Login";
 import Alert from "./components/layout/Alert";
+import PrivateRoute from "./components/routing/PrivateRoute";
+import AdminDash from "./components/dashboard/AdminDash";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 //redux
@@ -33,6 +35,7 @@ const App = () => {
           <Navbar />
           <Route exact path="/" component={Landing} />
           <Route exact path="/register" component={Register} />
+          <PrivateRoute exact path="/dashboard" component={AdminDash} />
           <section className="container">
             <Alert />
             <Switch>

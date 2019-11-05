@@ -10,6 +10,7 @@ import {
 } from "./types";
 import { setAlert } from "./alert";
 import setAuthToken from "../utils/setAuthToken";
+import { selComp } from "./dash";
 
 //Load User
 export const loadUser = () => async dispatch => {
@@ -24,6 +25,10 @@ export const loadUser = () => async dispatch => {
       type: USER_LOADED,
       payload: res.data
     });
+
+    if (res.data.profile === "admin") {
+      dispatch(selComp({ id: res.data._id }));
+    }
   } catch (err) {
     dispatch({
       type: AUTH_ERROR
@@ -153,4 +158,5 @@ export const login = ({ email, password }) => async dispatch => {
 //Logout
 export const logout = () => dispatch => {
   dispatch({ type: LOGOUT });
+  // dispatch(remSlots());
 };

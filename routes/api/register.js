@@ -124,12 +124,12 @@ router.post(
         }
 
         day = new Day({
-          slot1: sid[0],
-          slot2: sid[1],
-          slot3: sid[2],
-          slot4: sid[3],
-          slot5: sid[4],
-          slot6: sid[5]
+          slot1: { slot: sid[0] },
+          slot2: { slot: sid[1] },
+          slot3: { slot: sid[2] },
+          slot4: { slot: sid[3] },
+          slot5: { slot: sid[4] },
+          slot6: { slot: sid[5] }
         });
 
         await day.save();

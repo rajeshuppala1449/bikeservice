@@ -3,12 +3,17 @@ import {
   SELECT_COMPANY,
   BOOK_SLOT,
   GET_SLOTS,
-  LOGOUT
+  LOGOUT,
+  LOAD_COMP
 } from "../actions/types";
 
 const initialState = {
   cid: null,
-  slots: null
+  slots: null,
+  slotsLoaded: false,
+  selected: null,
+  comps: null,
+  compLoaded: false
 };
 
 export default function(state = initialState, action) {
@@ -23,13 +28,25 @@ export default function(state = initialState, action) {
     case GET_SLOTS:
       return {
         ...state,
-        slots: payload
+        slots: payload,
+        slotsLoaded: true
+      };
+    case BOOK_SLOT:
+      return {
+        ...state,
+        slotsLoaded: false
+      };
+    case LOAD_COMP:
+      return {
+        ...state,
+        comps: payload,
+        compLoaded: true
       };
     case LOGOUT:
       return {
         ...state,
         cid: null,
-        slots: null
+        slotsLoaded: false
       };
     default:
       return state;

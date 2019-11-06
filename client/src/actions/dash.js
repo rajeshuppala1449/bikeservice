@@ -1,13 +1,13 @@
 import axios from "axios";
 import {
-  //SELECT_SLOT,
+  SELECT_SLOT,
   SELECT_COMPANY,
-  //BOOK_SLOT,
+  BOOK_SLOT,
   GET_SLOTS,
-  LOGOUT
+  LOGOUT,
+  LOAD_COMP
 } from "./types";
 import { setAlert } from "./alert";
-//import setAuthToken from "../utils/setAuthToken";
 
 //select company
 export const selComp = ({ id }) => async dispatch => {
@@ -34,6 +34,62 @@ export const getSlots = ({ id }) => async dispatch => {
 
     dispatch({
       type: GET_SLOTS,
+      payload: res.data
+    });
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => {
+        dispatch(setAlert(error.msg, "danger"));
+      });
+    }
+  }
+};
+
+//book slots
+export const bookSlot = ({ selected, uid }) => async dispatch => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  try {
+    if (uid) {
+      const body = JSON.stringify({ selected, uid });
+
+      const res = await axios.post("/book/bookSlots/user", body, config);
+
+      dispatch({
+        type: BOOK_SLOT
+      });
+    } else {
+      const body = JSON.stringify({ selected });
+
+      const res = await axios.post("/book/bookSlots/admin", body, config);
+
+      dispatch({
+        type: BOOK_SLOT
+      });
+    }
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => {
+        dispatch(setAlert(error.msg, "danger"));
+      });
+    }
+  }
+};
+
+//get companies
+export const getComp = () => async dispatch => {
+  try {
+    const res = await axios.get("/book/getComp");
+
+    dispatch({
+      type: LOAD_COMP,
       payload: res.data
     });
   } catch (err) {

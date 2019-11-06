@@ -4,7 +4,7 @@ import Grid from "./Grid";
 const AdminDash = () => {
   return (
     <div>
-      <h1>Hello</h1>
+      <Grid></Grid>
     </div>
   );
 };

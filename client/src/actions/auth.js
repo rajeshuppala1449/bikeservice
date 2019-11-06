@@ -10,7 +10,7 @@ import {
 } from "./types";
 import { setAlert } from "./alert";
 import setAuthToken from "../utils/setAuthToken";
-import { selComp, remSlots } from "./dash";
+import { selComp, remSlots, getSlots, getComp } from "./dash";
 
 //Load User
 export const loadUser = () => async dispatch => {
@@ -28,6 +28,9 @@ export const loadUser = () => async dispatch => {
 
     if (res.data.profile === "admin") {
       dispatch(selComp({ id: res.data._id }));
+    }
+    if (res.data.profile === "user") {
+      dispatch(getComp());
     }
   } catch (err) {
     dispatch({

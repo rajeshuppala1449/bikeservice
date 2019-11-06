@@ -1,62 +1,95 @@
-// import React, { Fragment, useState } from "react";
-// import { Link, Redirect } from "react-router-dom";
-// import { connect } from "react-redux";
-// import { setAlert } from "../../actions/alert";
-// import PropTypes from "prop-types";
-// import { registerAdmin } from "../../actions/auth";
-// import { selComp } from "../../actions/dash";
-
-// const Grid = ({ slots }) => {
-//   // if (!slots) {
-//   //   return <Redirect to="/login" />;
-//   // }
-
-//   return (
-//     <div className="col-xs-12 col-sm-6 example-col">
-//       {slots.map(item => (
-//         <button type="button" class={`btn btn-outline-primary`}>
-//           {item.time}
-//         </button>
-//       ))}
-//     </div>
-//   );
-// };
-
-// Grid.propTypes = {
-//   slots: PropTypes.array
-// };
-
-// const mapStateToProps = state => ({
-//   slots: state.dash.slots
-// });
-
-//export default connect(mapStateToProps)(Grid);
-
 import React, { Fragment, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { setAlert } from "../../actions/alert";
 import PropTypes from "prop-types";
 import { registerAdmin } from "../../actions/auth";
-import { selComp } from "../../actions/dash";
+import { bookSlot, getSlots } from "../../actions/dash";
+import { BOOK_SLOT } from "../../actions/types";
 
-const Grid = ({ slots }) => {
-  // if (!slots) {
-  //   return <Redirect to="/login" />;
-  // }
+const Grid = ({ slots, bookSlot, getSlots, id, user }) => {
+  const [formData, setFormData] = useState({
+    selected: {}
+  });
 
-  return <h1>Hello</h1>;
+  const { selected } = formData;
+
+  const onClick = xid => {
+    var y = formData.selected;
+    if (user.profile === "user") {
+      y = {};
+    }
+
+    const x = y[xid];
+
+    if (x) {
+      delete y[xid];
+      setFormData({ ...formData, selected: y });
+    } else {
+      y[xid] = xid;
+
+      setFormData({ ...formData, selected: y });
+    }
+
+    console.log(formData.selected);
+  };
+
+  const handleBook = selected => {
+    var uid;
+    if (user.profile === "user") {
+      uid = user._id;
+      bookSlot({ selected, uid });
+    } else {
+      bookSlot({ selected, uid });
+    }
+
+    getSlots({ id });
+
+    setFormData({ ...formData, selected: {} });
+  };
+
+  return (
+    <div className="col-xs-12 col-sm-6 example-col">
+      {slots.map(item => (
+        <button
+          type="button"
+          className={`btn btn-${
+            item.booked || selected[item.id] ? "" : "outline-"
+          }${selected[item.id] ? "primary" : "danger"}`}
+          id={item.id}
+          key={item.id}
+          onClick={() => onClick(item.id)}
+        >
+          {item.time}
+        </button>
+      ))}
+
+      <button
+        type="button"
+        className={`btn btn-primary`}
+        onClick={() => handleBook(selected)}
+      >
+        LOCK
+      </button>
+    </div>
+  );
 };
 
-//return <h1>Hello</h1>;
-
 Grid.propTypes = {
-  slots: PropTypes.array
+  slots: PropTypes.array.isRequired,
+  bookSlot: PropTypes.func.isRequired,
+  id: PropTypes.string,
+  getSlots: PropTypes.func.isRequired,
+  user: PropTypes.object
 };
 
 const mapStateToProps = state => ({
-  slots: state.dash.slots
+  slots: state.dash.slots,
+  id: state.dash.cid,
+  user: state.auth.user
 });
 
-export default connect(mapStateToProps)(Grid);
-// export default Grid;
+export default connect(
+  mapStateToProps,
+  { bookSlot, getSlots }
+)(Grid);

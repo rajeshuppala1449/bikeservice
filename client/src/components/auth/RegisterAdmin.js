@@ -5,7 +5,12 @@ import { setAlert } from "../../actions/alert";
 import PropTypes from "prop-types";
 import { registerAdmin } from "../../actions/auth";
 
-const RegisterAdmin = ({ registerAdmin, setAlert, isAuthenticated }) => {
+const RegisterAdmin = ({
+  registerAdmin,
+  setAlert,
+  isAuthenticated,
+  slotsLoaded
+}) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -58,7 +63,7 @@ const RegisterAdmin = ({ registerAdmin, setAlert, isAuthenticated }) => {
   };
 
   //redirect if logged in
-  if (isAuthenticated) {
+  if (slotsLoaded) {
     return <Redirect to="/dashboard" />;
   }
 
@@ -194,11 +199,13 @@ const RegisterAdmin = ({ registerAdmin, setAlert, isAuthenticated }) => {
 RegisterAdmin.propTypes = {
   setAlert: PropTypes.func.isRequired,
   registerAdmin: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool
+  isAuthenticated: PropTypes.bool,
+  slotsLoaded: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  slotsLoaded: state.dash.slotsLoaded
 });
 
 export default connect(

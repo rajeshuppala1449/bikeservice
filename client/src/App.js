@@ -18,6 +18,7 @@ import setAuthToken from "./utils/setAuthToken";
 
 //import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
+import UserDash from "./components/dashboard/UserDash";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -36,6 +37,7 @@ const App = () => {
           <Route exact path="/" component={Landing} />
           <Route exact path="/register" component={Register} />
           <PrivateRoute exact path="/dashboard" component={AdminDash} />
+          <PrivateRoute exact path="/userdash" component={UserDash} />
           <section className="container">
             <Alert />
             <Switch>

@@ -11,3 +11,4 @@ export const BOOK_SLOT = "BOOK_SLOT";
 export const SELECT_COMPANY = "SELECT_COMPANY";
 export const LOGOUT = "LOGOUT";
 export const GET_SLOTS = "GET_SLOTS";
+export const LOAD_COMP = "LOAD_COMP";

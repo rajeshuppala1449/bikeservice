@@ -193,7 +193,7 @@ router.post("/", async (req, res) => {
     res.json(slots);
   } catch (err) {
     console.error(err.message);
-    return res.status(500).send("Server Error in registration");
+    return res.status(500).send("Server Error retriving slots");
   }
 });
 

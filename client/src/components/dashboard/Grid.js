@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { setAlert } from "../../actions/alert";
@@ -13,6 +13,9 @@ const Grid = ({ slots, bookSlot, getSlots, id, user }) => {
   });
 
   const { selected } = formData;
+
+  var d = Date(Date.now());
+  d = d.toString();
 
   const onClick = xid => {
     var y = formData.selected;
@@ -49,24 +52,57 @@ const Grid = ({ slots, bookSlot, getSlots, id, user }) => {
   };
 
   return (
-    <div className="col-xs-12 col-sm-6 example-col">
-      {slots.map(item => (
-        <button
-          type="button"
-          className={`btn btn-${
-            item.booked || selected[item.id] ? "" : "outline-"
-          }${selected[item.id] ? "primary" : "danger"}`}
-          id={item.id}
-          key={item.id}
-          onClick={() => onClick(item.id)}
-        >
-          {item.time}
-        </button>
-      ))}
-
+    <div className="col-xs-12 col-sm-12 example-col">
+      <div className="row">
+        {slots.slice(0, 6).map(item => (
+          <div className="col-2 p-1 m-0">
+            <button
+              type="button"
+              className={`btn btn-${
+                item.booked || selected[item.id] ? "" : "outline-"
+              }${selected[item.id] ? "primary" : "danger"} `}
+              id={item.id}
+              key={item.id}
+              onClick={item.booked ? {} : () => onClick(item.id)}
+            >
+              {item.time}
+            </button>
+          </div>
+        ))}
+        {slots.slice(6, 12).map(item => (
+          <div className="col-2 p-1 m-0">
+            <button
+              type="button"
+              className={`btn btn-${
+                item.booked || selected[item.id] ? "" : "outline-"
+              }${selected[item.id] ? "primary" : "danger"} `}
+              id={item.id}
+              key={item.id}
+              onClick={item.booked ? {} : () => onClick(item.id)}
+            >
+              {item.time}
+            </button>
+          </div>
+        ))}
+        {slots.slice(12, 18).map(item => (
+          <div className="col-2 p-1 m-0">
+            <button
+              type="button"
+              className={`btn btn-${
+                item.booked || selected[item.id] ? "" : "outline-"
+              }${selected[item.id] ? "primary" : "danger"} `}
+              id={item.id}
+              key={item.id}
+              onClick={item.booked ? {} : () => onClick(item.id)}
+            >
+              {item.time}
+            </button>
+          </div>
+        ))}
+      </div>
       <button
         type="button"
-        className={`btn btn-primary`}
+        className={`btn btn-primary pull-right`}
         onClick={() => handleBook(selected)}
       >
         LOCK

@@ -46,7 +46,8 @@ export default function(state = initialState, action) {
       return {
         ...state,
         cid: null,
-        slotsLoaded: false
+        slotsLoaded: false,
+        compLoaded: false
       };
     default:
       return state;

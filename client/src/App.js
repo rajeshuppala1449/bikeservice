@@ -7,6 +7,8 @@ import RegisterUser from "./components/auth/RegisterUser";
 import Login from "./components/auth/Login";
 import Alert from "./components/layout/Alert";
 import PrivateRoute from "./components/routing/PrivateRoute";
+import UserDash from "./components/dashboard/UserDash";
+import Comps from "./components/companies/Comps";
 import AdminDash from "./components/dashboard/AdminDash";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -16,9 +18,8 @@ import store from "./store";
 import { loadUser } from "./actions/auth";
 import setAuthToken from "./utils/setAuthToken";
 
-//import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
-import UserDash from "./components/dashboard/UserDash";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -36,13 +37,14 @@ const App = () => {
           <Navbar />
           <Route exact path="/" component={Landing} />
           <Route exact path="/register" component={Register} />
-          <PrivateRoute exact path="/dashboard" component={AdminDash} />
-          <PrivateRoute exact path="/userdash" component={UserDash} />
+
           <section className="container">
             <Alert />
             <Switch>
               <Route exact path="/login" component={Login} />
-
+              <PrivateRoute exact path="/dashboard" component={AdminDash} />
+              <PrivateRoute exact path="/userdash" component={UserDash} />
+              <PrivateRoute exact path="/loadcomps" component={Comps} />
               <Route exact path="/registeruser" component={RegisterUser} />
               <Route exact path="/registeradmin" component={RegisterAdmin} />
             </Switch>

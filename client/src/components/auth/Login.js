@@ -27,7 +27,7 @@ const Login = ({ login, isAuthenticated, slotsLoaded, compLoaded }) => {
   }
 
   if (compLoaded) {
-    return <Redirect to="/userdash" />;
+    return <Redirect to="/loadcomps" />;
   }
 
   return (

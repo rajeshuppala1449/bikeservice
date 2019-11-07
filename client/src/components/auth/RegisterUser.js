@@ -5,15 +5,16 @@ import { setAlert } from "../../actions/alert";
 import PropTypes from "prop-types";
 import { register } from "../../actions/auth";
 
-const RegisterUser = ({ setAlert, register, isAuthenticated }) => {
+const RegisterUser = ({ setAlert, register, isAuthenticated, compLoaded }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     password: "",
     password2: ""
   });
 
-  const { name, email, password, password2 } = formData;
+  const { name, email, phone, password, password2 } = formData;
 
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,13 +24,14 @@ const RegisterUser = ({ setAlert, register, isAuthenticated }) => {
     if (password !== password2) {
       setAlert("Password do not match", "danger", 5000);
     } else {
-      register({ name, email, password });
+      console.log(phone);
+      register({ name, email, phone, password });
     }
   };
 
   //redirect if logged in
-  if (isAuthenticated) {
-    return <Redirect to="/dashboard" />;
+  if (compLoaded) {
+    return <Redirect to="/loadcomps" />;
   }
 
   return (
@@ -57,6 +59,15 @@ const RegisterUser = ({ setAlert, register, isAuthenticated }) => {
             value={email}
             onChange={e => onChange(e)}
             required
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="Phone Number"
+            name="phone"
+            value={phone}
+            onChange={e => onChange(e)}
           />
         </div>
         <div className="form-group">
@@ -92,11 +103,13 @@ const RegisterUser = ({ setAlert, register, isAuthenticated }) => {
 RegisterUser.propTypes = {
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool
+  isAuthenticated: PropTypes.bool,
+  compLoaded: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  compLoaded: state.dash.compLoaded
 });
 
 export default connect(

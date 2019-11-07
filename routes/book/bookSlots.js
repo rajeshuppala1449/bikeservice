@@ -9,6 +9,7 @@ const CBDB = require("../../models/CBDB");
 const Slot = require("../../models/Slot");
 const Day = require("../../models/Day");
 const Admin = require("../../models/Admin");
+const sendmail = require("../mail/sendmail");
 
 //@route POST book/bookSlots/user
 //@desc  book a slot for user
@@ -26,6 +27,10 @@ router.post("/user", async (req, res) => {
       }
 
       await Slot.updateOne({ _id: selected[i] }, { booked: true, user: uid });
+
+      const user = await User.findOne({ _id: uid });
+
+      sendmail(user.email, "Your slot has booked");
     }
   } catch (err) {
     console.error(err.message);

@@ -5,7 +5,8 @@ import {
   BOOK_SLOT,
   GET_SLOTS,
   LOGOUT,
-  LOAD_COMP
+  LOAD_COMP,
+  GET_BOOKS
 } from "./types";
 import { setAlert } from "./alert";
 
@@ -36,6 +37,8 @@ export const getSlots = ({ id }) => async dispatch => {
       type: GET_SLOTS,
       payload: res.data
     });
+
+    dispatch(getBookDets({ slots: res.data }));
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -90,6 +93,34 @@ export const getComp = () => async dispatch => {
 
     dispatch({
       type: LOAD_COMP,
+      payload: res.data
+    });
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => {
+        dispatch(setAlert(error.msg, "danger"));
+      });
+    }
+  }
+};
+
+//get booking details
+export const getBookDets = ({ slots }) => async dispatch => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  try {
+    const body = JSON.stringify({ slots });
+
+    const res = await axios.post("/book/getBookDets", body, config);
+
+    dispatch({
+      type: GET_BOOKS,
       payload: res.data
     });
   } catch (err) {

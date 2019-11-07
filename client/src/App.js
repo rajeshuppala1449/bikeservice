@@ -38,7 +38,7 @@ const App = () => {
           <Route exact path="/" component={Landing} />
           <Route exact path="/register" component={Register} />
 
-          <section className="container">
+          <section className="container ">
             <Alert />
             <Switch>
               <Route exact path="/login" component={Login} />

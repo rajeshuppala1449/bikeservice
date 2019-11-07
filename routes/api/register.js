@@ -177,6 +177,9 @@ router.post(
       .not()
       .isEmpty(),
     check("email", "Please include a valid email").isEmail(),
+    check("phone", "Enter valid phone number")
+      .isMobilePhone()
+      .isLength({ min: 10, max: 10 }),
     check("password", "please enter valid password").isLength({ min: 6 })
   ],
   async (req, res) => {
@@ -185,7 +188,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password } = req.body;
+    const { name, email, phone, password } = req.body;
 
     try {
       let user = await User.findOne({ email });
@@ -213,6 +216,7 @@ router.post(
       user = new User({
         name,
         email,
+        phone,
         avatar,
         password
       });

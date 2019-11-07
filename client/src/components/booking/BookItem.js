@@ -4,23 +4,19 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { selComp } from "../../actions/dash";
 
-const CompItem = ({ comp, selComp }) => {
+const BookItem = ({ slotDet }) => {
   return (
     <div className="card card-body bg-light mb-3">
       <div className="row">
-        {/* <div className="col-2">
-            <img src={profile.user.avatar} alt="" className="rounded-circle" />
-          </div> */}
         <div className="col-lg-6 col-md-4 col-8">
           <h3>
-            <i className="fas fa-motorcycle"></i>
+            <i class="fas fa-motorcycle"></i>
             {`  ${comp.cdetails.cname}`}
           </h3>
           <p>
-            <i className="fas fa-compass"></i>
+            <i class="fas fa-compass"></i>
             {`  ${comp.cdetails.location.area}, ${comp.cdetails.location.city}, ${comp.cdetails.location.pincode}`}
           </p>
-
           <button
             className="btn btn-primary"
             onClick={() => selComp({ id: comp._id })}
@@ -44,9 +40,9 @@ const CompItem = ({ comp, selComp }) => {
   );
 };
 
-CompItem.propTypes = {
+BookItem.propTypes = {
   selComp: PropTypes.func.isRequired,
-  comp: PropTypes.object
+  comp: PropTypes.bool
 };
 
 const mapStateToProps = state => ({});
@@ -54,4 +50,4 @@ const mapStateToProps = state => ({});
 export default connect(
   mapStateToProps,
   { selComp }
-)(CompItem);
+)(BookItem);

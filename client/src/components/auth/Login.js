@@ -4,7 +4,13 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login } from "../../actions/auth";
 
-const Login = ({ login, isAuthenticated, slotsLoaded, compLoaded }) => {
+const Login = ({
+  login,
+  isAuthenticated,
+  slotsLoaded,
+  compLoaded,
+  bookLoaded
+}) => {
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -22,7 +28,7 @@ const Login = ({ login, isAuthenticated, slotsLoaded, compLoaded }) => {
   };
 
   //redirect if logged in
-  if (slotsLoaded) {
+  if (bookLoaded) {
     return <Redirect to="/dashboard" />;
   }
 
@@ -70,13 +76,15 @@ Login.propTypes = {
   login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
   slotsLoaded: PropTypes.bool,
-  compLoaded: PropTypes.bool
+  compLoaded: PropTypes.bool,
+  bookLoaded: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   slotsLoaded: state.dash.slotsLoaded,
-  compLoaded: state.dash.compLoaded
+  compLoaded: state.dash.compLoaded,
+  bookLoaded: state.dash.bookLoaded
 });
 
 export default connect(

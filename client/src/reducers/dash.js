@@ -4,7 +4,8 @@ import {
   BOOK_SLOT,
   GET_SLOTS,
   LOGOUT,
-  LOAD_COMP
+  LOAD_COMP,
+  GET_BOOKS
 } from "../actions/types";
 
 const initialState = {
@@ -13,7 +14,10 @@ const initialState = {
   slotsLoaded: false,
   selected: null,
   comps: null,
-  compLoaded: false
+  compLoaded: false,
+  loading: false,
+  bookings: null,
+  bookLoaded: false
 };
 
 export default function(state = initialState, action) {
@@ -29,18 +33,26 @@ export default function(state = initialState, action) {
       return {
         ...state,
         slots: payload,
-        slotsLoaded: true
+        slotsLoaded: true,
+        loading: false
       };
     case BOOK_SLOT:
       return {
         ...state,
-        slotsLoaded: false
+        slotsLoaded: false,
+        loading: true
       };
     case LOAD_COMP:
       return {
         ...state,
         comps: payload,
         compLoaded: true
+      };
+    case GET_BOOKS:
+      return {
+        ...state,
+        bookings: payload,
+        bookLoaded: true
       };
     case LOGOUT:
       return {

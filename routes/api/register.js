@@ -251,4 +251,21 @@ router.post(
   }
 );
 
+//@route POST api/register/getAdmin
+//@desc  get admin
+//@access public
+
+router.post("/getAdmin", async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    let admin = await Admin.findOne({ _id: id });
+
+    res.json(admin);
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).send("Server Error in registration");
+  }
+});
+
 module.exports = router;

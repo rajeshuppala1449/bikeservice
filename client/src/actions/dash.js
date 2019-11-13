@@ -6,18 +6,44 @@ import {
   GET_SLOTS,
   LOGOUT,
   LOAD_COMP,
-  GET_BOOKS
+  GET_BOOKS,
+  GET_COMP
 } from "./types";
 import { setAlert } from "./alert";
 
 //select company
 export const selComp = ({ id }) => async dispatch => {
-  dispatch({
-    type: SELECT_COMPANY,
-    payload: id
-  });
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
 
-  dispatch(getSlots({ id }));
+  try {
+    const body = JSON.stringify({ id });
+
+    const res = await axios.post("api/register/getAdmin", body, config);
+
+    dispatch({
+      type: GET_COMP,
+      payload: res.data
+    });
+
+    dispatch({
+      type: SELECT_COMPANY,
+      payload: id
+    });
+
+    dispatch(getSlots({ id }));
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => {
+        dispatch(setAlert(error.msg, "danger"));
+      });
+    }
+  }
 };
 
 //get slots

@@ -15,17 +15,19 @@ router.post("/", async (req, res) => {
     for (i in slots) {
       if (slots[i].booked) {
         const slot = await Slot.findOne({ _id: slots[i].id });
-        const user = await User.findOne({ _id: slot.user });
-        book = {
-          name: user.name,
-          time: slot.time,
-          slot: slot.slot,
-          //phone:user.phone,
-          //date:slot.date,
-          email: user.email
-        };
-        bookings[k] = book;
-        k = k + 1;
+        if (slot.user) {
+          const user = await User.findOne({ _id: slot.user });
+          book = {
+            name: user.name,
+            time: slot.time,
+            slot: slot.slot,
+            phone: user.phone,
+            //date:slot.date,
+            email: user.email
+          };
+          bookings[k] = book;
+          k = k + 1;
+        }
       }
     }
 

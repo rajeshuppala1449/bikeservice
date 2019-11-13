@@ -4,37 +4,38 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { selComp } from "../../actions/dash";
 
-const BookItem = ({ slotDet }) => {
+const BookItem = ({ book }) => {
+  var d1 = "7 - 11- 2019";
   return (
     <div className="card card-body bg-light mb-3">
       <div className="row">
         <div className="col-lg-6 col-md-4 col-8">
-          <h3>
-            <i class="fas fa-motorcycle"></i>
-            {`  ${comp.cdetails.cname}`}
-          </h3>
+          <h5>CUSTOMER</h5>
           <p>
-            <i class="fas fa-compass"></i>
-            {`  ${comp.cdetails.location.area}, ${comp.cdetails.location.city}, ${comp.cdetails.location.pincode}`}
+            <i className="fas fa-user"></i>
+            {`  ${book.name}`}
           </p>
-          <button
-            className="btn btn-primary"
-            onClick={() => selComp({ id: comp._id })}
-          >
-            Book Slot
-          </button>
+          <p>
+            <i className="fas fa-phone-alt"></i>
+            {`  ${book.phone}`}
+          </p>
+          <p>
+            <i className="fas fa-envelope"></i>
+            {` ${book.email}`}
+          </p>
         </div>
-        {/* <div className="col-md-4 d-none d-md-block">
-            <h4>Skill Set</h4>
-            <ul className="list-group">
-              {profile.skills.slice(0, 4).map((skill, index) => (
-                <li key={index} className="list-group-item">
-                  <i className="fa fa-check pr-1" />
-                  {skill}
-                </li>
-              ))}
-            </ul>
-          </div> */}
+      </div>
+      <div className="col-md-4 d-none d-md-block">
+        <p>{`SLOT`}</p>
+        <span>
+          <i class="far fa-clock"></i>
+          {` ${book.time}    `}
+        </span>
+        <span>
+          {`  `}
+          <i class="fas fa-calendar-day"></i>
+          {` ${d1}`}
+        </span>
       </div>
     </div>
   );
@@ -42,7 +43,8 @@ const BookItem = ({ slotDet }) => {
 
 BookItem.propTypes = {
   selComp: PropTypes.func.isRequired,
-  comp: PropTypes.bool
+  comp: PropTypes.bool,
+  book: PropTypes.object
 };
 
 const mapStateToProps = state => ({});

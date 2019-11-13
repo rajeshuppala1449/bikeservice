@@ -13,3 +13,4 @@ export const LOGOUT = "LOGOUT";
 export const GET_SLOTS = "GET_SLOTS";
 export const LOAD_COMP = "LOAD_COMP";
 export const GET_BOOKS = "GET_BOOKS";
+export const GET_COMP = "GET_COMP";

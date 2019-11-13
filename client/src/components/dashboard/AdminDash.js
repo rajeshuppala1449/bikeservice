@@ -5,7 +5,7 @@ import { setAlert } from "../../actions/alert";
 import PropTypes from "prop-types";
 import { register } from "../../actions/auth";
 import Grid from "./Grid";
-//import BookItem from "../booking/BookItem";
+import BookItem from "../booking/BookItem";
 
 const AdminDash = ({ user, bookings, bookLoaded }) => {
   return (
@@ -44,6 +44,11 @@ const AdminDash = ({ user, bookings, bookLoaded }) => {
       <br></br>
       <br></br>
       <h2>Bookings</h2>
+      <div>
+        {bookings.map(book => (
+          <BookItem key={book.slot} book={book} />
+        ))}
+      </div>
     </div>
   );
 };
